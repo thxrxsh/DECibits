@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DECibits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script>
+
+    <style>
+        .bg-pattern {
+            background-color: #0c0c0c;
+            background-image: url("data:image/svg+xml,%3Csvg width='84' height='84' viewBox='0 0 84 84' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M84 23c-4.417 0-8-3.584-8-7.998V8h-7.002C64.58 8 61 4.42 61 0H23c0 4.417-3.584 8-7.998 8H8v7.002C8 19.42 4.42 23 0 23v38c4.417 0 8 3.584 8 7.998V76h7.002C19.42 76 23 79.58 23 84h38c0-4.417 3.584-8 7.998-8H76v-7.002C76 64.58 79.58 61 84 61V23zM59.05 83H43V66.95c5.054-.5 9-4.764 9-9.948V52h5.002c5.18 0 9.446-3.947 9.95-9H83v16.05c-5.054.5-9 4.764-9 9.948V74h-5.002c-5.18 0-9.446 3.947-9.95 9zm-34.1 0H41V66.95c-5.053-.502-9-4.768-9-9.948V52h-5.002c-5.184 0-9.447-3.946-9.95-9H1v16.05c5.053.502 9 4.768 9 9.948V74h5.002c5.184 0 9.447 3.946 9.95 9zm0-82H41v16.05c-5.054.5-9 4.764-9 9.948V32h-5.002c-5.18 0-9.446 3.947-9.95 9H1V24.95c5.054-.5 9-4.764 9-9.948V10h5.002c5.18 0 9.446-3.947 9.95-9zm34.1 0H43v16.05c5.053.502 9 4.768 9 9.948V32h5.002c5.184 0 9.447 3.946 9.95 9H83V24.95c-5.053-.502-9-4.768-9-9.948V10h-5.002c-5.184 0-9.447-3.946-9.95-9zM50 50v7.002C50 61.42 46.42 65 42 65c-4.417 0-8-3.584-8-7.998V50h-7.002C22.58 50 19 46.42 19 42c0-4.417 3.584-8 7.998-8H34v-7.002C34 22.58 37.58 19 42 19c4.417 0 8 3.584 8 7.998V34h7.002C61.42 34 65 37.58 65 42c0 4.417-3.584 8-7.998 8H50z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+
+<body class="min-h-screen flex items-center justify-center bg-pattern dark scrollbar">
+    <div class="bg-neutral-950/43 backdrop-blur-sm border border-gray-700 p-8 rounded-2xl w-full max-w-6xl max-sm:min-h-screen">
+        <h1
+            class="text-4xl font-bold mb-6 text-center text-transparent  bg-clip-text bg-gradient-to-r from-blue-200/80 to-blue-800/80">
+            DECibits
+        </h1>
+        <form id="predictForm" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+            onsubmit="handleSubmit(event)">
+            <!-- Age -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Age
+                    <span class="ml-1 cursor-pointer text-blue-500" title="Customer's Age.">ⓘ</span>
+                </label>
+                <input type="number" name="age" required
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm" />
+            </div>
+
+            <!-- Gender -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Gender
+                    <span class="ml-1 cursor-pointer text-blue-500" title="Customer's gender.">ⓘ</span>
+                </label>
+                <select name="gender"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+
+            <!-- Partner -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Partner
+                    <span class="ml-1 cursor-pointer text-blue-500" title="Does the customer have a partner?">ⓘ</span>
+                </label>
+                <select name="Partner"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+
+            <!-- Dependents -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Dependents
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="Does the customer have any dependents like children or elders?">ⓘ</span>
+                </label>
+                <select name="Dependents"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+
+            <!-- Tenure -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">How long been a customer?
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="	How long has the customer been with the company?">ⓘ</span>
+                </label>
+                <select name="tenure"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option value="0">Less than 1 month</option>
+                    <option value="1">1 months</option>
+                    <option value="2">2 months</option>
+                    <option value="3">3 months</option>
+                    <option value="4">4 months</option>
+                    <option value="5">5 months</option>
+                    <option value="6">6 months</option>
+                    <option value="7">7 months</option>
+                    <option value="8">8 months</option>
+                    <option value="9">9 months</option>
+                    <option value="10">10 months</option>
+                    <option value="11">11 months</option>
+                    <option value="12">1 year</option>
+                    <option value="24">2 years</option>
+                    <option value="36">3 years</option>
+                    <option value="48">4 years</option>
+                    <option value="60">5 years</option>
+                    <option value="72">More than 5 years</option>
+                </select>
+            </div>
+
+
+            <!-- PhoneService -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Phone Service
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="Does the customer have a phone service?">ⓘ</span>
+                </label>
+                <select name="PhoneService"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+
+            <!-- MultipleLines -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Multiple Lines
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="Does the customer have multiple phone lines?">ⓘ</span>
+                </label>
+                <select name="MultipleLines"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>No phone service</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+
+            <!-- InternetService -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Internet Service
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="Type of internet service the customer uses.">ⓘ</span>
+                </label>
+                <select name="InternetService"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>DSL</option>
+                    <option>Fiber optic</option>
+                    <option>No</option>
+                </select>
+            </div>
+
+            <!-- OnlineSecurity -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Online Security
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="	Does the customer use online security services?">ⓘ</span>
+                </label>
+                <select name="OnlineSecurity"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>No internet service</option>
+                </select>
+            </div>
+
+            <!-- OnlineBackup -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Online Backup
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="Does the customer use online backup services?">ⓘ</span>
+                </label>
+                <select name="OnlineBackup"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>No internet service</option>
+                </select>
+            </div>
+
+            <!-- DeviceProtection -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Device Protection
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="Does the customer use device protection services?">ⓘ</span>
+                </label>
+                <select name="DeviceProtection"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>No internet service</option>
+                </select>
+            </div>
+
+            <!-- TechSupport -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Tech Support
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="Does the customer use technical support services?">ⓘ</span>
+                </label>
+                <select name="TechSupport"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>No internet service</option>
+                </select>
+            </div>
+
+            <!-- StreamingTV -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Streaming TV
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="Does the customer stream TV content?">ⓘ</span>
+                </label>
+                <select name="StreamingTV"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>No internet service</option>
+                </select>
+            </div>
+
+            <!-- StreamingMovies -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Streaming Movies
+                    <span class="ml-1 cursor-pointer text-blue-500" title="Does the customer stream movies?">ⓘ</span>
+                </label>
+                <select name="StreamingMovies"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>No internet service</option>
+                </select>
+            </div>
+
+            <!-- Contract -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Contract Type
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="What is the type of contract that customer has?">ⓘ</span>
+                </label>
+                <select name="Contract"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Month-to-month</option>
+                    <option>One year</option>
+                    <option>Two year</option>
+                </select>
+            </div>
+
+            <!-- PaperlessBilling -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Paperless Billing
+                    <span class="ml-1 cursor-pointer text-blue-500" title="Is the billing done paperlessly?">ⓘ</span>
+                </label>
+                <select name="PaperlessBilling"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm">
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+
+            <!-- PaymentMethod -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Payment Method
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="How does the customer pay their bills?">ⓘ</span>
+                </label>
+                <select name="PaymentMethod"
+                    class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full px-3 py-2 rounded-lg shadow-sm ">
+                    <option>Electronic check</option>
+                    <option>Mailed check</option>
+                    <option>Bank transfer (automatic)</option>
+                    <option>Credit card (automatic)</option>
+                </select>
+            </div>
+
+            <!-- Monthly Charges -->
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-500">Monthly Charges
+                    <span class="ml-1 cursor-pointer text-blue-500"
+                        title="	Enter the monthly charge amount (in your currency, it will be converted).">ⓘ</span>
+                </label>
+                <div class="relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 flex items-center">
+                        <select name="currency"
+                            class="h-full py-0 pl-2 pr-2 text-sm border-r-2 border-gray-950 bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 ">
+                            <option value="USD">$</option>
+                            <option value="LKR">Rs</option>
+                            <option value="EUR">€</option>
+                            <option value="INR">₹</option>
+                        </select>
+                    </div>
+                    <input type="number" step="0.01" name="MonthlyCharges"
+                        class="bg-gray-800/50 hover:bg-gray-800 focus:bg-gray-800 text-gray-400 outline-0 w-full pl-20 pr-3 py-2 rounded-lg "
+                        required />
+                </div>
+            </div>
+
+
+            <!-- Submit Button -->
+            <div class="sm:col-span-2 md:col-span-3 text-center mt-4">
+                <button type="submit"
+                    class="flex flex-row justify-self-center bg-gray-800/50 text-blue-300 border border-blue-300/30 hover:bg-gray-800 px-6 py-2 rounded-xl transition-all">
+                    Predict Churn &nbsp;
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                    </svg>
+
+                </button>
+            </div>
+        </form>
+
+
+
+
+        <div id="resultContainer" class="mt-10 text-center hidden">
+            <!-- <h2 class="text-2xl font-semibold text-blue-300 mb-4 ">Prediction Result</h2> -->
+
+            <!-- Gauge -->
+            <canvas id="churnGauge" class="mx-auto max-md:mt-[100px] w-full md:w-1/2 opacity-75"></canvas>
+
+            <!-- Text Result -->
+            <div id="churnStatus" class="text-3xl font-bold mt-4 "></div>
+
+            <!-- Confidence -->
+            <div id="confidence" class="text-md font-medium text-gray-400 mt-2 "></div>
+
+            <button id="retry-btn" disabled class="mt-10 bg-gray-800/50 text-blue-300 border border-blue-300/30 hover:bg-gray-800 px-6 py-2 rounded-xl transition-all">Retry</button>
+        </div>
+
+
+    </div>
+
+
+    
+
+<script>
+    let gauge; // Keep reference
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+
+        // Show result container
+        document.getElementById('predictForm').classList.add('hidden');
+        document.getElementById('resultContainer').classList.remove('hidden');
+        document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+
+        document.getElementById('churnStatus').style.color = "#eeeeee";
+        document.getElementById('churnStatus').innerText = "N/A";
+        document.getElementById('confidence').innerText = "Calculating...";
+
+        const form = document.getElementById('predictForm');
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            const churnProbability = result.probabilities.churn;
+            const churnStatusText = result.churn_prediction === 1 ? "Churn" : "Stay";
+            const churnColor = result.churn_prediction === 1 ? "#b91c1c" : "#10b981";
+            const confidence = result.confidence.toFixed(2);
+
+            // Create gauge if not already created
+           if (!gauge) {
+                const opts = {
+                    angle: 0.2,
+                    lineWidth: 0.4,
+                    radiusScale: 1,
+                    pointer: {
+                        length: 0.6,
+                        strokeWidth: 0.035,
+                        color: '#FFFFFF'
+                    },
+                    limitMax: false,
+                    limitMin: false,
+                    colorStart: '#DE6616',
+                    colorStop: '#F02222',
+                    strokeColor: '#7788E0',
+                    generateGradient: true,
+                    highDpiSupport: true,
+
+                      // renderTicks is Optional
+                    renderTicks: {
+                        divisions: 4,
+                        divWidth: 1.1,
+                        divLength: 0.7,
+                        divColor: '#333333',
+                        subDivisions: 3,
+                        subLength: 0.5,
+                        subWidth: 0.6,
+                        subColor: '#666666'
+                    }
+                };
+
+                const target = document.getElementById('churnGauge');
+                gauge = new Gauge(target).setOptions(opts);
+                gauge.maxValue = 1;
+                gauge.setMinValue(0);
+                gauge.animationSpeed = 32;
+            }
+
+
+
+            // Set gauge value
+            gauge.set(churnProbability);
+
+            setTimeout(() => {
+            // Update result texts
+                document.getElementById('churnStatus').innerText = churnStatusText;
+                document.getElementById('churnStatus').style.color = churnColor;
+                document.getElementById('confidence').innerText = `Confidence: ${confidence}%`;
+                document.getElementById('retry-btn').disabled = false;
+            }, 2500);
+
+
+
+
+
+
+
+        } catch (error) {
+            console.error('Prediction failed:', error);
+            alert("Prediction failed. Please try again.");
+        }
+    }
+
+
+    document.getElementById('retry-btn').addEventListener('click', () => {
+        document.getElementById('resultContainer').classList.add('hidden');
+        document.getElementById('predictForm').classList.remove('hidden');
+        document.getElementById('predictForm').scrollIntoView({ behavior: 'smooth' });
+        gauge.set(0); // Reset gauge
+        document.getElementById('churnStatus').innerText = "N/A";
+        document.getElementById('confidence').innerText = "";
+        document.getElementById('retry-btn').disabled = true;
+    });
+
+</script>
+
+
+
+
+</body>
+
+
+</html>
