@@ -1,6 +1,6 @@
 import joblib
 
-model = joblib.load("model/best_churn_model.pkl")
+model = joblib.load("model/gradient_boosting_model.pkl")
 scaler = joblib.load("model/scaler.pkl")
 columns = joblib.load("model/columns.pkl")
 
